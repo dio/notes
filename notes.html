@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{.Title}} · RockyBars</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      line-height: 1.6;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    header,
+    main {
+      box-sizing: border-box;
+      margin: 0 auto;
+      max-width: 800px;
+      padding: 1.5rem;
+    }
+
+    header {
+      padding-bottom: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    pre {
+      background: color-mix(in srgb, CanvasText 8%, Canvas);
+      border-radius: 0.4rem;
+      overflow-x: auto;
+      padding: 1rem;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+
+    p code,
+    li code {
+      background: color-mix(in srgb, CanvasText 8%, Canvas);
+      border-radius: 0.2rem;
+      padding: 0.1rem 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <header><a href="/">RockyBars</a> / <a href="/notes">notes</a></header>
+  <main>{{.Content}}</main>
+</body>
+</html>
