@@ -2,12 +2,13 @@ package main
 
 import (
 	"bytes"
-	_ "embed"
+	"embed"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/yuin/goldmark"
 )
@@ -18,10 +19,43 @@ var indexHTML []byte
 //go:embed notes.html
 var notesTemplateSource string
 
-//go:embed notes/envoy/ads-discovery-request-version-info.md
-var adsVersionInfoMarkdown []byte
+//go:embed notes
+var notesFS embed.FS
 
 var notesTemplate = template.Must(template.New("notes").Parse(notesTemplateSource))
+
+var notesIndexTemplate = template.Must(template.New("notes-index").Parse(`<h1>Notes</h1>
+<p>Technical things worth keeping.</p>
+<h2>Envoy</h2>
+<ul>
+{{range .}}  <li><a href="{{.URL}}">{{.Title}}</a>{{if .Repository}} — <a href="{{.Repository}}">source repository</a>{{end}}</li>
+{{end}}</ul>`))
+
+type noteDefinition struct {
+	Title      string
+	URL        string
+	Source     string
+	Repository string
+}
+
+var publishedNotes = []noteDefinition{
+	{
+		Title:  "ADS DiscoveryRequest.version_info across stream reconnects",
+		URL:    "/notes/envoy/ads-discovery-request-version-info",
+		Source: "notes/envoy/ads-discovery-request-version-info.md",
+	},
+	{
+		Title:      "One Route, One Cluster, Many Providers",
+		URL:        "/notes/envoy/one-route-one-cluster-many-providers",
+		Source:     "notes/envoy/one-route-one-cluster-many-providers.md",
+		Repository: "https://github.com/dio/envoy-one-cluster-many-providers",
+	},
+	{
+		Title:  "Envoy projects and issue reproductions",
+		URL:    "/notes/envoy/projects",
+		Source: "notes/envoy/projects.md",
+	},
+}
 
 type notesPage struct {
 	Title   string
@@ -29,7 +63,8 @@ type notesPage struct {
 }
 
 func newHandler() http.Handler {
-	adsVersionInfoHTML := renderMarkdown(adsVersionInfoMarkdown)
+	renderedNotes := loadNotes()
+	notesIndex := renderNotesIndex()
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet && r.Method != http.MethodHead {
@@ -38,29 +73,51 @@ func newHandler() http.Handler {
 			return
 		}
 
-		switch r.URL.Path {
+		requestPath := strings.TrimSuffix(r.URL.Path, "/")
+		if requestPath == "" {
+			requestPath = "/"
+		}
+
+		switch requestPath {
 		case "/":
 			writeHTML(w, indexHTML)
-		case "/notes", "/notes/":
+		case "/notes":
 			writeNotesPage(w, notesPage{
-				Title: "Notes",
-				Content: template.HTML(`<h1>Notes</h1>
-<p>Technical things worth keeping.</p>
-<h2>Envoy</h2>
-<ul>
-  <li><a href="/notes/envoy/ads-discovery-request-version-info">ADS DiscoveryRequest.version_info across stream reconnects</a></li>
-</ul>`),
-			})
-		case "/notes/envoy/ads-discovery-request-version-info",
-			"/notes/envoy/ads-discovery-request-version-info/":
-			writeNotesPage(w, notesPage{
-				Title:   "ADS DiscoveryRequest.version_info across stream reconnects",
-				Content: adsVersionInfoHTML,
+				Title:   "Notes",
+				Content: notesIndex,
 			})
 		default:
-			http.NotFound(w, r)
+			page, ok := renderedNotes[requestPath]
+			if !ok {
+				http.NotFound(w, r)
+				return
+			}
+			writeNotesPage(w, page)
 		}
 	})
+}
+
+func loadNotes() map[string]notesPage {
+	renderedNotes := make(map[string]notesPage, len(publishedNotes))
+	for _, note := range publishedNotes {
+		source, err := notesFS.ReadFile(note.Source)
+		if err != nil {
+			panic(fmt.Sprintf("read %s: %v", note.Source, err))
+		}
+		renderedNotes[note.URL] = notesPage{
+			Title:   note.Title,
+			Content: renderMarkdown(source),
+		}
+	}
+	return renderedNotes
+}
+
+func renderNotesIndex() template.HTML {
+	var rendered bytes.Buffer
+	if err := notesIndexTemplate.Execute(&rendered, publishedNotes); err != nil {
+		panic(fmt.Sprintf("render notes index: %v", err))
+	}
+	return template.HTML(rendered.String())
 }
 
 func renderMarkdown(source []byte) template.HTML {

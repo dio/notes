@@ -27,7 +27,7 @@ func TestHandler(t *testing.T) {
 			method:     http.MethodGet,
 			path:       "/notes",
 			wantStatus: http.StatusOK,
-			wantBody:   "ADS DiscoveryRequest.version_info across stream reconnects",
+			wantBody:   "https://github.com/dio/envoy-one-cluster-many-providers",
 		},
 		{
 			name:       "Envoy ADS note",
@@ -35,6 +35,20 @@ func TestHandler(t *testing.T) {
 			path:       "/notes/envoy/ads-discovery-request-version-info",
 			wantStatus: http.StatusOK,
 			wantBody:   "successfully accepted",
+		},
+		{
+			name:       "Envoy provider selection article",
+			method:     http.MethodGet,
+			path:       "/notes/envoy/one-route-one-cluster-many-providers",
+			wantStatus: http.StatusOK,
+			wantBody:   "github.com/dio/envoy-one-cluster-many-providers",
+		},
+		{
+			name:       "Envoy project index",
+			method:     http.MethodGet,
+			path:       "/notes/envoy/projects/",
+			wantStatus: http.StatusOK,
+			wantBody:   "envoy-callout-credential-injection",
 		},
 		{
 			name:       "missing page",
