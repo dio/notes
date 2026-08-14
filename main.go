@@ -51,7 +51,12 @@ var publishedNotes = []noteDefinition{
 		Repository: "https://github.com/dio/envoy-one-cluster-many-providers",
 	},
 	{
-		Title:  "Envoy projects and issue reproductions",
+		Title:  "Current Envoy prototypes and issue reproductions",
+		URL:    "/notes/envoy-prototypes-and-issues",
+		Source: "notes/envoy-prototypes-and-issues.md",
+	},
+	{
+		Title:  "Envoy project archive",
 		URL:    "/notes/envoy/projects",
 		Source: "notes/envoy/projects.md",
 	},

@@ -26,4 +26,5 @@ verifies the public `/notes` endpoint. Deployment uses the app-scoped
 - [ADS `DiscoveryRequest.version_info` across stream reconnects](notes/envoy/ads-discovery-request-version-info.md)
 - [One Route, One Cluster, Many Providers](notes/envoy/one-route-one-cluster-many-providers.md)
   ([source prototype](https://github.com/dio/envoy-one-cluster-many-providers))
-- [Envoy projects and issue reproductions](notes/envoy/projects.md)
+- [Current Envoy prototypes and issue reproductions](notes/envoy-prototypes-and-issues.md)
+- [Envoy project archive](notes/envoy/projects.md)

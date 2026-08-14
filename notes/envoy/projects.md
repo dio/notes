@@ -1,4 +1,4 @@
-# Envoy projects and issue reproductions
+# Envoy project archive
 
 This is a curated inventory of public, original repositories under
 [`github.com/dio`](https://github.com/dio) that explore Envoy concepts, reproduce issues, or make
@@ -8,33 +8,8 @@ repositories, and unrelated products are intentionally omitted.
 Older experiments may use historical Envoy APIs or container images. Treat them as references,
 not as promises of compatibility with current Envoy releases.
 
-## Current concept prototypes and issue reproductions
-
-- [`envoy-one-cluster-many-providers`](https://github.com/dio/envoy-one-cluster-many-providers) —
-  request-aware upstream selection with one stable route and dynamic cluster. Read the
-  [full article](/notes/envoy/one-route-one-cluster-many-providers).
-- [`envoy-callout-credential-injection`](https://github.com/dio/envoy-callout-credential-injection) —
-  `ext_proc` and `ext_authz` callout credential-injection demo for
-  [Envoy issue #41767](https://github.com/envoyproxy/envoy/issues/41767), using the capability from
-  [Envoy PR #38398](https://github.com/envoyproxy/envoy/pull/38398).
-- [`ext-proc-session-affinity`](https://github.com/dio/ext-proc-session-affinity) — external
-  processing session-affinity demo related to
-  [Envoy issue #46159](https://github.com/envoyproxy/envoy/issues/46159) and the merged
-  [session-affinity documentation PR #46558](https://github.com/envoyproxy/envoy/pull/46558).
-- [`envoy-custom-response-local-reply-body`](https://github.com/dio/envoy-custom-response-local-reply-body) —
-  minimal reproducer for [Envoy issue #45346](https://github.com/envoyproxy/envoy/issues/45346),
-  with the proposed fix in [Envoy PR #46555](https://github.com/envoyproxy/envoy/pull/46555).
-- [`auto-sni-choose-host`](https://github.com/dio/auto-sni-choose-host) — proof of concept around
-  logical hostnames, `auto_host_sni`, and runtime-selected hosts, tracking
-  [Envoy issue #45962](https://github.com/envoyproxy/envoy/issues/45962),
-  [logical-hostname PR #46388](https://github.com/envoyproxy/envoy/pull/46388), and
-  [SNI session-cache PR #45982](https://github.com/envoyproxy/envoy/pull/45982).
-- [`envoy-sni-session-cache-repro`](https://github.com/dio/envoy-sni-session-cache-repro) — focused
-  reproducer for TLS session reuse across different SNI names,
-  [Envoy issue #46243](https://github.com/envoyproxy/envoy/issues/46243), and its fix in
-  [Envoy PR #45982](https://github.com/envoyproxy/envoy/pull/45982).
-- [`envoy-16629`](https://github.com/dio/envoy-16629) — local reproducer for
-  [Envoy issue #16629](https://github.com/envoyproxy/envoy/issues/16629).
+Active work and focused reproducers now live in
+[Current Envoy prototypes and issue reproductions](/notes/envoy-prototypes-and-issues).
 
 ## Dynamic modules and extension SDKs
 

@@ -44,11 +44,18 @@ func TestHandler(t *testing.T) {
 			wantBody:   "github.com/dio/envoy-one-cluster-many-providers",
 		},
 		{
+			name:       "current Envoy prototypes and issues",
+			method:     http.MethodGet,
+			path:       "/notes/envoy-prototypes-and-issues",
+			wantStatus: http.StatusOK,
+			wantBody:   "envoy-callout-credential-injection",
+		},
+		{
 			name:       "Envoy project index",
 			method:     http.MethodGet,
 			path:       "/notes/envoy/projects/",
 			wantStatus: http.StatusOK,
-			wantBody:   "envoy-callout-credential-injection",
+			wantBody:   "Current Envoy prototypes and issue reproductions",
 		},
 		{
 			name:       "missing page",
