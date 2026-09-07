@@ -4,6 +4,10 @@
 
 > Source and prototype: [dio/envoy-one-cluster-many-providers](https://github.com/dio/envoy-one-cluster-many-providers).
 
+> Follow-up, 2026-09-08: [When does async host selection need a TLS options refresh?](/notes/envoy/async-host-selection-tls-identity)
+> distinguishes the merged host-driven TLS coverage from late request-specific overrides that still
+> need a focused regression test.
+
 ### Abstract
 
 Recent Envoy dynamic-module work enables an interesting deployment shape: one route and one dynamic

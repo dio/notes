@@ -40,6 +40,11 @@ type noteDefinition struct {
 
 var publishedNotes = []noteDefinition{
 	{
+		Title:  "When does async host selection need a TLS options refresh?",
+		URL:    "/notes/envoy/async-host-selection-tls-identity",
+		Source: "notes/envoy/async-host-selection-tls-identity.md",
+	},
+	{
 		Title:  "ADS DiscoveryRequest.version_info across stream reconnects",
 		URL:    "/notes/envoy/ads-discovery-request-version-info",
 		Source: "notes/envoy/ads-discovery-request-version-info.md",
