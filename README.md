@@ -23,6 +23,7 @@ verifies the public `/notes` endpoint. Deployment uses the app-scoped
 
 ## Envoy
 
+- [When does async host selection need a TLS options refresh?](notes/envoy/async-host-selection-tls-identity.md)
 - [ADS `DiscoveryRequest.version_info` across stream reconnects](notes/envoy/ads-discovery-request-version-info.md)
 - [One Route, One Cluster, Many Providers](notes/envoy/one-route-one-cluster-many-providers.md)
   ([source prototype](https://github.com/dio/envoy-one-cluster-many-providers))
